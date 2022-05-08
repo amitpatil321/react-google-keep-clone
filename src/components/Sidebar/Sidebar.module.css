@@ -1,0 +1,45 @@
+.sider {
+  /* width: 280px !important; */
+}
+
+.sider :global(.ant-menu) {
+  height: 100%;
+  border-right: none;
+}
+
+.sider :global(.ant-menu-item) {
+  color: #202124 !important;
+  letter-spacing: 0.01785714em;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  line-height: 1.25rem !important;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+  border-radius: 0px 25px 25px 0px;
+  height: 48px !important;
+  line-height: 48px !important;
+}
+
+.sider :global(.ant-menu-item::after) {
+  opacity: 0 !important;
+}
+
+.sider :global(svg) {
+  font-size: 24px !important;
+}
+
+.sider :global(.ant-menu-inline-collapsed .ant-menu-item) {
+  border-radius: 25px;
+}
+
+.sider :global(.ant-menu-inline-collapsed .ant-menu-item svg) {
+  vertical-align: middle !important;
+}
+
+.sider :global(.ant-menu-item-selected) {
+  background-color: #feefc3 !important;
+}
+
+.sider :global(.ant-menu-item:hover) {
+  background-color: #f1f3f4;
+}
