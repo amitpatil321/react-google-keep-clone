@@ -1,0 +1,27 @@
+.header {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 10px;
+  vertical-align: middle;
+}
+
+.menuIconContainer:hover {
+  background-color: #f0f0f0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.menuIcon {
+  width: 50px;
+  cursor: pointer;
+  text-align: center;
+  display: block;
+  margin: auto;
+  margin-top: 7px;
+  margin-left: 9px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
