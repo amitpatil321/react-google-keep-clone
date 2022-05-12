@@ -4,11 +4,12 @@ import { Layout, Row, Col, Menu } from "antd";
 
 import Header from "./components/Header/Header";
 import Sidebar from "./components/Sidebar/Sidebar";
+import ListNotes from "./components/ListNotes/ListNotes";
 
 import styles from "./App.module.css";
 import "antd/dist/antd.css";
 
-const { Sider, Content } = Layout;
+const { Content } = Layout;
 
 const App = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -31,7 +32,7 @@ const App = () => {
                   minHeight: 280,
                 }}
               >
-                Content
+                <ListNotes />
               </Content>
             </Layout>
           </Layout>
