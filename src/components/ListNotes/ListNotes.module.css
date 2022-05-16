@@ -1,3 +1,32 @@
 .notes {
   padding: 20px;
 }
+
+.note {
+  border: 1px solid red;
+}
+.note:hover .controls {
+  transition: all 0.3s linear;
+  opacity: 1;
+}
+.controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 30px;
+  width: 100%;
+  opacity: 0;
+  transition: all 0.3s linear;
+}
+.controls :global(.anticon) {
+  width: 28px !important;
+  text-align: center;
+  padding: 8px;
+  transition: all 0.3s linear;
+}
+.controls :global(.anticon:hover) {
+  cursor: pointer;
+  opacity: 0.87;
+  background-color: rgba(95, 99, 104, 0.157);
+  border-radius: 50%;
+}

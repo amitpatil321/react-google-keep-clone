@@ -8,6 +8,8 @@ import ListNotes from "./components/ListNotes/ListNotes";
 
 import styles from "./App.module.css";
 import "antd/dist/antd.css";
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
 
 const { Content } = Layout;
 
