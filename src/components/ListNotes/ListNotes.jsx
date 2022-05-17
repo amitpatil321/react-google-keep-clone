@@ -42,18 +42,20 @@ const ListNotes = () => {
   // Generate layout for grids
   useEffect(() => {
     const layout = [];
-    let noteWidth = 2.5;
-    let noteHeight = 1;
+    let noteWidth = 2;
+    let noteHeight = 6;
     notes.map((eachNote, index) => {
       layout.push({
         i: eachNote.id,
         x: index * noteWidth,
         y: 0,
         w: noteWidth,
-        h: noteHeight,
+        h:
+          eachNote.description.length < 200
+            ? noteHeight
+            : eachNote.description.length * 0.03, // Dynamic height
       });
     });
-    console.log(layout);
     setLayout(layout);
   }, [notes]);
 
@@ -67,11 +69,11 @@ const ListNotes = () => {
           //   cols={12}
           layouts={{ lg: layout }}
           breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-          cols={{ lg: 12, md: 12, sm: 10, xs: 4, xxs: 2 }}
-          rowHeight={200}
+          cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+          rowHeight={30}
           width={800}
           measureBeforeMount={false}
-          compactType={null}
+          compactType="horizontal"
           isResizable={false}
           resizeHandles={[]}
         >
@@ -79,7 +81,9 @@ const ListNotes = () => {
             return (
               <Card hoverable key={eachNote.id} className={styles.note}>
                 <h4>{trim(eachNote.title, 20)}</h4>
-                <b>{trim(eachNote.description, 50)}</b>
+                <div className={styles.notedescription}>
+                  {trim(eachNote.description, 500)}
+                </div>
                 <div className={styles.controls}>
                   <Space>
                     <BellOutlined />
