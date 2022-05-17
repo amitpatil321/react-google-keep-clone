@@ -10,6 +10,7 @@ import {
   PictureOutlined,
   FileOutlined,
   MoreOutlined,
+  PushpinOutlined,
 } from "@ant-design/icons";
 
 import { trim } from "@/utils.js";
@@ -80,20 +81,29 @@ const ListNotes = () => {
           {notes.map((eachNote, index) => {
             return (
               <Card hoverable key={eachNote.id} className={styles.note}>
-                <h4>{trim(eachNote.title, 20)}</h4>
-                <div className={styles.notedescription}>
-                  {trim(eachNote.description, 500)}
-                </div>
-                <div className={styles.controls}>
-                  <Space>
-                    <BellOutlined />
-                    <UserAddOutlined />
-                    <FormatPainterOutlined />
-                    <PictureOutlined />
-                    <FileOutlined />
-                    <MoreOutlined />
-                  </Space>
-                </div>
+                <Row>
+                  <Col span={23}>
+                    <h4>{trim(eachNote.title, 20)}</h4>
+                  </Col>
+                  <Col span={1}>
+                    <PushpinOutlined onClick={() => alert("Pin clicked")} />
+                  </Col>
+                  <Col span={24}>
+                    <div className={styles.notedescription}>
+                      {trim(eachNote.description, 500)}
+                    </div>
+                    <div className={styles.controls}>
+                      <Space>
+                        <BellOutlined />
+                        <UserAddOutlined />
+                        <FormatPainterOutlined />
+                        <PictureOutlined />
+                        <FileOutlined />
+                        <MoreOutlined />
+                      </Space>
+                    </div>
+                  </Col>
+                </Row>
               </Card>
             );
           })}
