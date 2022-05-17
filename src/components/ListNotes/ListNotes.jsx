@@ -15,6 +15,7 @@ import {
 
 import { trim } from "@/utils.js";
 import db from "@/config/firebase";
+import NoteDetailsModal from "@/components/NoteDetailsModal/NoteDetailsModal";
 
 import styles from "./ListNotes.module.css";
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -23,6 +24,7 @@ const ListNotes = () => {
   const [notes, setNotes] = useState([]);
   const [layout, setLayout] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedNote, setSelectedNote] = useState(null);
 
   useEffect(() => {
     const fetch = async () => {
@@ -54,7 +56,7 @@ const ListNotes = () => {
         h:
           eachNote.description.length < 200
             ? noteHeight
-            : eachNote.description.length * 0.03, // Dynamic height
+            : eachNote.description.length * 0.04, // Dynamic height
       });
     });
     setLayout(layout);
@@ -80,7 +82,12 @@ const ListNotes = () => {
         >
           {notes.map((eachNote, index) => {
             return (
-              <Card hoverable key={eachNote.id} className={styles.note}>
+              <Card
+                hoverable
+                key={eachNote.id}
+                className={styles.note}
+                onClick={() => setSelectedNote(eachNote)}
+              >
                 <Row>
                   <Col span={23}>
                     <h4>{trim(eachNote.title, 20)}</h4>
@@ -108,6 +115,12 @@ const ListNotes = () => {
             );
           })}
         </ResponsiveGridLayout>
+        {selectedNote && (
+          <NoteDetailsModal
+            selectedNote={selectedNote}
+            setSelectedNote={setSelectedNote}
+          />
+        )}
       </Col>
     </Row>
   );
