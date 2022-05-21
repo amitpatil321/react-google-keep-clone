@@ -1,8 +1,24 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
-import { Row, Col, Card, Space } from "antd";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { Row, Col, Card, Space, Popover, notification } from "antd";
+import { collection } from "firebase/firestore";
+import { getDatabase, ref, set } from "firebase/database";
+import { ref as sRef } from "firebase/storage";
+
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  addDoc,
+  updateDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+
 import { Responsive, WidthProvider } from "react-grid-layout";
+import { GithubPicker } from "react-color";
 import {
   BellOutlined,
   UserAddOutlined,
@@ -45,7 +61,7 @@ const ListNotes = () => {
   // Generate layout for grids
   useEffect(() => {
     const layout = [];
-    let noteWidth = 2;
+    let noteWidth = 2.5;
     let noteHeight = 6;
     notes.map((eachNote, index) => {
       layout.push({
@@ -54,13 +70,45 @@ const ListNotes = () => {
         y: 0,
         w: noteWidth,
         h:
-          eachNote.description.length < 200
+          eachNote?.description?.length < 200
             ? noteHeight
             : eachNote.description.length * 0.04, // Dynamic height
       });
     });
     setLayout(layout);
   }, [notes]);
+
+  const setColor = async (noteId, color) => {
+    // try {
+    //   await addDoc(collection(getFirestore(), "notes"), {
+    //     name: "aaa",
+    //     text: "aasdsadasd",
+    //   });
+    // } catch (error) {
+    //   console.error("Error writing new message to Firebase Database", error);
+    // }
+    const washingtonRef = doc(db, "notes", noteId);
+
+    // Create copy of existing color
+    const oldColor = notes.find((e) => e.id === noteId).color;
+    notes.find((e) => e.id === noteId).color = color;
+    setNotes([...notes]);
+
+    // Now, Update firebase with new changes
+    try {
+      await updateDoc(washingtonRef, {
+        color: color,
+      });
+    } catch (error) {
+      // On failure revert back the changes
+      notes.find((e) => e.id === noteId).color = oldColor;
+      setNotes([...notes]);
+      notification["error"]({
+        message: "Error",
+        description: "Error updating note color",
+      });
+    }
+  };
 
   return (
     <Row>
@@ -83,10 +131,11 @@ const ListNotes = () => {
           {notes.map((eachNote, index) => {
             return (
               <Card
+                // onClick={() => setSelectedNote(eachNote)}
                 hoverable
                 key={eachNote.id}
                 className={styles.note}
-                onClick={() => setSelectedNote(eachNote)}
+                style={{ backgroundColor: eachNote.color }}
               >
                 <Row>
                   <Col span={23}>
@@ -99,11 +148,31 @@ const ListNotes = () => {
                     <div className={styles.notedescription}>
                       {trim(eachNote.description, 500)}
                     </div>
-                    <div className={styles.controls}>
+                    <div
+                      className={styles.controls}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                      }}
+                    >
                       <Space>
                         <BellOutlined />
                         <UserAddOutlined />
-                        <FormatPainterOutlined />
+                        <Popover
+                          style={{ padding: "0px !important" }}
+                          content={
+                            <GithubPicker
+                              onChange={(color) =>
+                                setColor(eachNote.id, color.hex)
+                              }
+                            />
+                          }
+                          trigger="click"
+                          placement="bottom"
+                          triangle="hide"
+                        >
+                          <FormatPainterOutlined />
+                        </Popover>
                         <PictureOutlined />
                         <FileOutlined />
                         <MoreOutlined />

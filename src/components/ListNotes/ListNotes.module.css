@@ -3,7 +3,6 @@
 }
 
 .note {
-  height: 200px;
   border-radius: 8px !important;
 }
 
@@ -42,4 +41,12 @@
   opacity: 0.87;
   background-color: rgba(95, 99, 104, 0.157);
   border-radius: 50%;
+}
+
+:global(.ant-popover-inner-content) {
+  padding: 0px !important;
+}
+
+.notes :global(.react-grid-item.react-grid-placeholder) {
+  background: #fff;
 }

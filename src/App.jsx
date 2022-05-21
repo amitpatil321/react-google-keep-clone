@@ -4,6 +4,7 @@ import { Layout, Row, Col, Menu } from "antd";
 
 import Header from "./components/Header/Header";
 import Sidebar from "./components/Sidebar/Sidebar";
+import AddNoteForm from "./components/AddNoteForm/AddNoteForm";
 import ListNotes from "./components/ListNotes/ListNotes";
 
 import styles from "./App.module.css";
@@ -28,12 +29,8 @@ const App = () => {
             <Layout className={styles.whitebg}>
               <Content
                 className={[styles.whitebg, styles.nopaddingmargin].join(" ")}
-                style={{
-                  margin: "24px 16px",
-                  padding: 24,
-                  minHeight: 280,
-                }}
               >
+                <AddNoteForm />
                 <ListNotes />
               </Content>
             </Layout>
