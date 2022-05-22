@@ -18,19 +18,25 @@
 .icons {
   float: right;
   cursor: pointer;
-  margin-right: 10px;
+  /* padding-top: 5px; */
+  padding-right: 10px;
 }
 
-.icons :global(.anticon) {
-  padding: 0px 1em;
-  font-size: 15px;
-  padding: 10px;
-}
+/* .icons :global(.ants-pace) {
+  padding: 5px;
+  width: 10px;
+} */
 
-.icons :global(.anticon:hover) {
+/* .icons :global(.ant-space-item) {
+  padding: 5px;
+  margin-right: 15px;
+} */
+/*
+.icons :global(svg:hover) {
+  margin: 5px;
   background: #eee;
   border-radius: 50%;
-}
+} */
 
 .noteInputForm {
   padding: 10px 5px;
@@ -56,8 +62,12 @@
   font-size: 16px;
 }
 
+.noteInputForm :global(.ant-space) {
+  margin-top: 10px;
+}
+
 .noteInputForm :global(.ant-space-item) {
-  padding: 2px 0.6em;
+  padding: 2px 10px;
 }
 
 .noteInputForm :global(.anticon) {

@@ -1,0 +1,23 @@
+.controls :global(.ant-space-item) {
+  padding: 0px 5px 0px 5px;
+  /* transition: all 0.3s linear; */
+}
+
+/* .controls :global(.ant-space-item:hover) {
+  background-color: rgba(95, 99, 104, 0.157);
+  border-radius: 50%;
+  opacity: 0.87;
+} */
+/*
+.controls :global(.anticon) {
+  width: 28px !important;
+  text-align: center;
+  padding: 8px;
+  transition: all 0.3s linear;
+}
+.controls :global(.anticon:hover) {
+  cursor: pointer;
+  opacity: 0.87;
+  background-color: rgba(95, 99, 104, 0.157);
+  border-radius: 50%;
+} */

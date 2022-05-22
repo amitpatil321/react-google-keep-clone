@@ -46,10 +46,14 @@ const App = () => {
     <div className={styles.app}>
       <Row>
         <Col span={24}>
-          <Header collapsed={collapsed} setCollapsed={setCollapsed} />
+          <Header
+            loading={loading}
+            collapsed={collapsed}
+            setCollapsed={setCollapsed}
+          />
         </Col>
         <Col span={24}>
-          <Layout style={{ height: "100vh" }}>
+          <Layout className="layout">
             <Sidebar collapsed={collapsed} />
             <Layout className={styles.whitebg}>
               <Content

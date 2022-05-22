@@ -1,5 +1,5 @@
 .header {
-  padding: 10px;
+  padding: 12px;
   border-bottom: 1px solid #eee;
   margin-bottom: 10px;
   vertical-align: middle;
@@ -36,12 +36,16 @@
   vertical-align: middle;
 }
 
-.searchInput,
-.searchInput input {
+.searchInput {
+  height: 50px;
+}
+
+.searchInput {
   border-radius: 8px !important;
-  background: #f1f3f4 !important;
+  background: #ececec !important;
 }
 
 .searchInput:focus {
-  background: #fff;
+  border-radius: 0px !important;
+  background: #fff !important;
 }

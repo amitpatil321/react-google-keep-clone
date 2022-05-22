@@ -1,36 +1,14 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
-import { Row, Col, Card, Space, Popover, notification } from "antd";
-import { collection } from "firebase/firestore";
-import { getDatabase, ref, set } from "firebase/database";
-import { ref as sRef } from "firebase/storage";
-
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  setDoc,
-  addDoc,
-  updateDoc,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { Row, Col, Card, notification, Empty } from "antd";
+import { doc, updateDoc } from "firebase/firestore";
 
 import { Responsive, WidthProvider } from "react-grid-layout";
-import { GithubPicker } from "react-color";
-import {
-  BellOutlined,
-  UserAddOutlined,
-  FormatPainterOutlined,
-  PictureOutlined,
-  FileOutlined,
-  MoreOutlined,
-  PushpinOutlined,
-} from "@ant-design/icons";
+import { PushpinOutlined } from "@ant-design/icons";
 
 import { trim } from "@/utils.js";
 import db from "@/config/firebase";
+import Controls from "@/components/Controls/Controls";
 import NoteDetailsModal from "@/components/NoteDetailsModal/NoteDetailsModal";
 
 import styles from "./ListNotes.module.css";
@@ -117,41 +95,14 @@ const ListNotes = ({ loading, notes }) => {
                     <h4>{trim(eachNote.title, 20)}</h4>
                   </Col>
                   <Col span={1}>
-                    <PushpinOutlined onClick={() => alert("Pin clicked")} />
+                    <PushpinOutlined />
                   </Col>
                   <Col span={24}>
                     <div className={styles.notedescription}>
                       {trim(eachNote.description, 500)}
                     </div>
-                    <div
-                      className={styles.controls}
-                      onClick={(event) => {
-                        event.preventDefault();
-                        event.stopPropagation();
-                      }}
-                    >
-                      <Space>
-                        <BellOutlined />
-                        <UserAddOutlined />
-                        <Popover
-                          style={{ padding: "0px !important" }}
-                          content={
-                            <GithubPicker
-                              onChange={(color) =>
-                                setColor(eachNote.id, color.hex)
-                              }
-                            />
-                          }
-                          trigger="click"
-                          placement="bottom"
-                          triangle="hide"
-                        >
-                          <FormatPainterOutlined />
-                        </Popover>
-                        <PictureOutlined />
-                        <FileOutlined />
-                        <MoreOutlined />
-                      </Space>
+                    <div className={styles.controls}>
+                      <Controls />
                     </div>
                   </Col>
                 </Row>
@@ -159,6 +110,7 @@ const ListNotes = ({ loading, notes }) => {
             );
           })}
         </ResponsiveGridLayout>
+        {!loading && notes.length <= 0 && <Empty />}
         {selectedNote && (
           <NoteDetailsModal
             selectedNote={selectedNote}
