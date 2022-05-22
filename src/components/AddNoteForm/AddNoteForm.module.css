@@ -1,0 +1,83 @@
+.addnoteinput {
+  padding-left: 30px;
+  font-size: 16px;
+  color: #585858;
+  outline: none;
+  width: 100%;
+  height: 45px;
+  line-height: 45px;
+  border-radius: 0.5em;
+  border: 1px solid #eee;
+  box-shadow: 2px 2px 4px 0px rgba(138, 136, 138, 1);
+}
+
+.addnoteinput:hover {
+  cursor: text;
+}
+
+.icons {
+  float: right;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.icons :global(.anticon) {
+  padding: 0px 1em;
+  font-size: 15px;
+  padding: 10px;
+}
+
+.icons :global(.anticon:hover) {
+  background: #eee;
+  border-radius: 50%;
+}
+
+.noteInputForm {
+  padding: 10px 5px;
+  width: 100%;
+  border-radius: 0.5em;
+  border: 1px solid #eee;
+  box-shadow: 2px 2px 4px 0px rgba(138, 136, 138, 1);
+}
+
+.noteInputForm :global(.ant-input) {
+  resize: none;
+}
+
+.description {
+  overflow: hidden;
+}
+.title::placeholder {
+  color: #696969 !important;
+  font-size: 16px;
+}
+.description::placeholder {
+  color: #696969 !important;
+  font-size: 16px;
+}
+
+.noteInputForm :global(.ant-space-item) {
+  padding: 2px 0.6em;
+}
+
+.noteInputForm :global(.anticon) {
+  font-size: 17px;
+  text-align: center;
+  padding: 8px;
+  transition: all 0.3s linear;
+}
+
+.noteInputForm :global(.anticon:hover) {
+  cursor: pointer;
+  opacity: 0.87;
+  background-color: rgba(95, 99, 104, 0.157);
+  border-radius: 50%;
+}
+
+.close {
+  margin-top: 5px;
+  float: right;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #4e4e4e !important;
+}

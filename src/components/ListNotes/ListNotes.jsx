@@ -36,27 +36,10 @@ import NoteDetailsModal from "@/components/NoteDetailsModal/NoteDetailsModal";
 import styles from "./ListNotes.module.css";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const ListNotes = () => {
-  const [notes, setNotes] = useState([]);
+const ListNotes = ({ loading, notes }) => {
+  const [notesList, setNotes] = useState([notes]);
   const [layout, setLayout] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [selectedNote, setSelectedNote] = useState(null);
-
-  useEffect(() => {
-    const fetch = async () => {
-      setLoading(true);
-      const notesCollection = await collection(db, "notes");
-      const notesSnapshot = await getDocs(notesCollection);
-      const notesList = notesSnapshot.docs.map((doc) => {
-        const data = doc.data();
-        const id = doc.id;
-        return { ...data, id };
-      });
-      setLoading(false);
-      setNotes(notesList);
-    };
-    fetch();
-  }, []);
 
   // Generate layout for grids
   useEffect(() => {
@@ -72,22 +55,14 @@ const ListNotes = () => {
         h:
           eachNote?.description?.length < 200
             ? noteHeight
-            : eachNote.description.length * 0.04, // Dynamic height
+            : eachNote?.description?.length * 0.04, // Dynamic height
       });
     });
     setLayout(layout);
   }, [notes]);
 
   const setColor = async (noteId, color) => {
-    // try {
-    //   await addDoc(collection(getFirestore(), "notes"), {
-    //     name: "aaa",
-    //     text: "aasdsadasd",
-    //   });
-    // } catch (error) {
-    //   console.error("Error writing new message to Firebase Database", error);
-    // }
-    const washingtonRef = doc(db, "notes", noteId);
+    const noteRef = doc(db, "notes", noteId);
 
     // Create copy of existing color
     const oldColor = notes.find((e) => e.id === noteId).color;
@@ -96,7 +71,7 @@ const ListNotes = () => {
 
     // Now, Update firebase with new changes
     try {
-      await updateDoc(washingtonRef, {
+      await updateDoc(noteRef, {
         color: color,
       });
     } catch (error) {
