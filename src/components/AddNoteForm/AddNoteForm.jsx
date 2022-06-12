@@ -22,55 +22,63 @@ import styles from "./AddNoteForm.module.css";
 
 const { TextArea } = Input;
 
-const AddNoteForm = ({ onAddNote }) => {
-  const [title, setTitle] = React.useState(null);
-  const [description, setDescription] = React.useState(null);
-  const [showForm, toggleForm] = React.useState(false);
-
-  const saveNote = async () => {
-    try {
-      if (title.length) {
-        let { id } = await addDoc(collection(getFirestore(), "notes"), {
-          title,
-          description: "test",
-        });
-        onAddNote({ id, title, description });
-        setTitle(null);
-        setDescription(null);
-      }
-    } catch (error) {
-      notification["error"]({
-        message: "Error",
-        description: "Error adding note",
-      });
-    }
-  };
+const AddNoteForm = ({
+  showAddNoteForm,
+  toggleAddNoteForm,
+  title,
+  description,
+  setTitle,
+  setDescription,
+  setTitleFocused,
+  setDescFocused,
+}) => {
+  // const saveNote = async () => {
+  //   try {
+  //     if (title.length) {
+  //       let { id } = await addDoc(collection(getFirestore(), "notes"), {
+  //         title,
+  //         description: "test",
+  //       });
+  //       onAddNote({ id, title, description });
+  //       setTitle(null);
+  //       setDescription(null);
+  //     }
+  //   } catch (error) {
+  //     notification["error"]({
+  //       message: "Error",
+  //       description: "Error adding note",
+  //     });
+  //   }
+  // };
 
   return (
     <Row tabIndex={0}>
       <Col span={4} />
       <Col span={16}>
-        <div
-          className={styles.addnoteinput}
-          onClick={() => toggleForm(!showForm)}
-          style={{ display: showForm ? "none" : "block" }}
-        >
-          Take a note...
-          <div className={styles.icons}>
-            <Space>
-              <Tooltip placement="bottom" title="new list">
-                <CheckBoxOutlinedIcon fontSize="small" />
-              </Tooltip>
-              <Tooltip placement="bottom" title="new note with drawing">
-                <BrushOutlinedIcon fontSize="small" />
-              </Tooltip>
-              <Tooltip placement="bottom" title="new note with image">
-                <ImageOutlinedIcon fontSize="small" />
-              </Tooltip>
-            </Space>
+        {!showAddNoteForm ? (
+          <div
+            className={styles.addnoteinput}
+            onClick={() => {
+              setDescFocused(true);
+              toggleAddNoteForm(true);
+            }}
+          >
+            Take a note...
+            <div className={styles.icons}>
+              <Space>
+                <Tooltip placement="bottom" title="new list">
+                  <CheckBoxOutlinedIcon fontSize="small" />
+                </Tooltip>
+                <Tooltip placement="bottom" title="new note with drawing">
+                  <BrushOutlinedIcon fontSize="small" />
+                </Tooltip>
+                <Tooltip placement="bottom" title="new note with image">
+                  <ImageOutlinedIcon fontSize="small" />
+                </Tooltip>
+              </Space>
+            </div>
           </div>
-        </div>
-        {showForm && (
+        ) : (
           <Row className={styles.noteInputForm}>
             <Col span={24}>
               <Input
@@ -79,14 +87,20 @@ const AddNoteForm = ({ onAddNote }) => {
                 bordered={false}
                 placeholder="Title"
                 onChange={(event) => setTitle(event.target.value)}
-                onBlur={() => saveNote()}
+                // onBlur={() => saveNote()}
+                onFocus={() => setTitleFocused(true)}
+                onBlur={() => setTitleFocused(false)}
               />
               <TextArea
+                autoFocus
                 value={description}
                 className={styles.description}
                 bordered={false}
                 placeholder="Take a note..."
                 autoSize
+                onChange={(event) => setDescription(event.target.value)}
+                onFocus={() => setDescFocused(true)}
+                onBlur={() => setDescFocused(false)}
               />
             </Col>
             <Col span={24}>
@@ -98,7 +112,7 @@ const AddNoteForm = ({ onAddNote }) => {
                   <Button
                     type="link"
                     className={styles.close}
-                    onClick={() => toggleForm(!showForm)}
+                    onClick={() => toggleAddNoteForm(!showAddNoteForm)}
                   >
                     Close
                   </Button>

@@ -1,6 +1,6 @@
 .addnoteinput {
-  padding-left: 30px;
-  font-size: 16px;
+  padding-left: 15px;
+  font-size: 1rem;
   color: #585858;
   outline: none;
   width: 100%;
@@ -55,11 +55,11 @@
 }
 .title::placeholder {
   color: #696969 !important;
-  font-size: 16px;
+  font-size: 1rem;
 }
 .description::placeholder {
   color: #696969 !important;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .noteInputForm :global(.ant-space) {
@@ -71,7 +71,7 @@
 }
 
 .noteInputForm :global(.anticon) {
-  font-size: 17px;
+  font-size: 1.125rem;
   text-align: center;
   padding: 8px;
   transition: all 0.3s linear;
@@ -87,7 +87,7 @@
 .close {
   margin-top: 5px;
   float: right;
-  font-size: 14px !important;
+  font-size: 0.8rem !important;
   font-weight: 500 !important;
   color: #4e4e4e !important;
 }
