@@ -91,13 +91,15 @@ const ListNotes = ({ loading, notes }) => {
                 style={{ backgroundColor: eachNote.color }}
               >
                 <Row>
-                  <Col span={23}>
-                    <h4>{trim(eachNote.title, 20)}</h4>
-                  </Col>
-                  <Col span={1}>
+                  {eachNote.title && (
+                    <Col span={23} className={styles.noteTitle}>
+                      {trim(eachNote.title, 20)}
+                    </Col>
+                  )}
+                  {/* <Col span={1}>
                     <PushpinOutlined />
-                  </Col>
-                  <Col span={24}>
+                  </Col> */}
+                  <Col span={24} className={styles.noteDesc}>
                     <div className={styles.notedescription}>
                       {trim(eachNote.description, 500)}
                     </div>

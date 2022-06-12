@@ -7,8 +7,22 @@
   min-height: 150px;
 }
 
+.noteTitle {
+  letter-spacing: 0.00625em;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+}
+
+.noteDesc {
+  font-size: 1.125rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.5rem;
+}
+
 .note :global(.ant-card-body) {
-  padding: 15 px !important;
+  padding: 12px !important;
 }
 
 .note :global(.anticon-pushpin) {
