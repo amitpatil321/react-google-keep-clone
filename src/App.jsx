@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Row, Col, Menu } from "antd";
-import { getDocs, collection } from "firebase/firestore";
+import { Layout, Row, Col, Alert } from "antd";
+import { getDocs, collection, getFirestore, addDoc } from "firebase/firestore";
 
 import db from "@/config/firebase";
 
@@ -17,33 +17,87 @@ import "react-resizable/css/styles.css";
 const { Content } = Layout;
 
 const App = () => {
+  const [error, setError] = useState(null);
   const [collapsed, setCollapsed] = useState(false);
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [titleFocused, setTitleFocused] = useState(false);
+  const [descFocused, setDescFocused] = useState(false);
+  const [title, setTitle] = React.useState(null);
+  const [description, setDescription] = React.useState(null);
+  const [showAddNoteForm, toggleAddNoteForm] = React.useState(false);
 
   const fetchNotes = async () => {
     setLoading(true);
-    const notesCollection = await collection(db, "notes");
-    const notesSnapshot = await getDocs(notesCollection);
-    const notesList = notesSnapshot.docs.map((doc) => {
-      const data = doc.data();
-      const id = doc.id;
-      return { ...data, id };
-    });
-    setLoading(false);
-    setNotes(notesList);
-  };
-
-  const onAddNote = (note) => {
-    setNotes([note, ...notes]);
+    try {
+      const notesCollection = await collection(db, "notes");
+      const notesSnapshot = await getDocs(notesCollection);
+      const notesList = notesSnapshot.docs.map((doc) => {
+        const data = doc.data();
+        const id = doc.id;
+        return { ...data, id };
+      });
+      setLoading(false);
+      setNotes(notesList);
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+      setError("Error fetching notes", +err);
+    }
   };
 
   useEffect(() => {
     fetchNotes();
   }, []);
 
+  const onBlurOut = async () => {
+    // toggleAddNoteForm(false);
+    // if (!descFocused && !titleFocused) {
+    //   console.log("if 1");
+    //   console.log(title, description);
+    //   if (title?.length || description?.length) {
+    //     console.log("if 2");
+    //     let noteObj = {
+    //       title,
+    //       description,
+    //     };
+    //     try {
+    //       let { id } = await addDoc(collection(getFirestore(), "notes"), {
+    //         ...noteObj,
+    //       });
+    //       setTitle("");
+    //       setDescription("");
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
+    //   }
+    // }
+    if (!descFocused && !titleFocused) {
+      // If add notes is open, then close it
+      if (showAddNoteForm) toggleAddNoteForm(false);
+      if (title?.length || description?.length) {
+        let noteObj = {
+          title,
+          description,
+        };
+        try {
+          let { id } = await addDoc(collection(getFirestore(), "notes"), {
+            ...noteObj,
+          });
+          setTitle("");
+          setDescription("");
+          setNotes([{ id, ...noteObj }, ...notes]);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    } else {
+      console.log("somethig is focused");
+    }
+  };
+
   return (
-    <div className={styles.app}>
+    <div className={styles.app} onClick={onBlurOut}>
       <Row>
         <Col span={24}>
           <Header
@@ -59,7 +113,22 @@ const App = () => {
               <Content
                 className={[styles.whitebg, styles.nopaddingmargin].join(" ")}
               >
-                <AddNoteForm onAddNote={onAddNote} />
+                <AddNoteForm
+                  showAddNoteForm={showAddNoteForm}
+                  toggleAddNoteForm={toggleAddNoteForm}
+                  title={title}
+                  description={description}
+                  setTitle={setTitle}
+                  setDescription={setDescription}
+                  setTitleFocused={setTitleFocused}
+                  setDescFocused={setDescFocused}
+                />
+                {error && (
+                  <p>
+                    <br />
+                    <Alert type="error" message={error} showIcon />
+                  </p>
+                )}
                 <ListNotes loading={loading} notes={notes} />
               </Content>
             </Layout>
