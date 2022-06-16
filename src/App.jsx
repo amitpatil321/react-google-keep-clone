@@ -25,6 +25,7 @@ const App = () => {
   const [descFocused, setDescFocused] = useState(false);
   const [title, setTitle] = React.useState(null);
   const [description, setDescription] = React.useState(null);
+  const [bgColor, setBgColor] = React.useState("#fff");
   const [showAddNoteForm, toggleAddNoteForm] = React.useState(false);
 
   const fetchNotes = async () => {
@@ -51,39 +52,23 @@ const App = () => {
   }, []);
 
   const onBlurOut = async () => {
-    // toggleAddNoteForm(false);
-    // if (!descFocused && !titleFocused) {
-    //   console.log("if 1");
-    //   console.log(title, description);
-    //   if (title?.length || description?.length) {
-    //     console.log("if 2");
-    //     let noteObj = {
-    //       title,
-    //       description,
-    //     };
-    //     try {
-    //       let { id } = await addDoc(collection(getFirestore(), "notes"), {
-    //         ...noteObj,
-    //       });
-    //       setTitle("");
-    //       setDescription("");
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   }
-    // }
     if (!descFocused && !titleFocused) {
       // If add notes is open, then close it
-      if (showAddNoteForm) toggleAddNoteForm(false);
+      if (showAddNoteForm) {
+        setBgColor("#fff");
+        toggleAddNoteForm(false);
+      }
       if (title?.length || description?.length) {
         let noteObj = {
           title,
           description,
+          color: bgColor,
         };
         try {
           let { id } = await addDoc(collection(getFirestore(), "notes"), {
             ...noteObj,
           });
+          setBgColor("#fff");
           setTitle("");
           setDescription("");
           setNotes([{ id, ...noteObj }, ...notes]);
@@ -114,6 +99,8 @@ const App = () => {
                 className={[styles.whitebg, styles.nopaddingmargin].join(" ")}
               >
                 <AddNoteForm
+                  bgColor={bgColor}
+                  setBgColor={setBgColor}
                   showAddNoteForm={showAddNoteForm}
                   toggleAddNoteForm={toggleAddNoteForm}
                   title={title}

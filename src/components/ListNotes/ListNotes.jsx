@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import { Row, Col, Card, notification, Empty } from "antd";
-import { doc, updateDoc } from "firebase/firestore";
 
 import { Responsive, WidthProvider } from "react-grid-layout";
 import PushPinOutlinedIcon from "@mui/icons-material/PushPinOutlined";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import { trim } from "@/utils.js";
-import db from "@/config/firebase";
 import Controls from "@/components/Controls/Controls";
 import NoteDetailsModal from "@/components/NoteDetailsModal/NoteDetailsModal";
 
@@ -39,30 +37,6 @@ const ListNotes = ({ loading, notes }) => {
     });
     setLayout(layout);
   }, [notes]);
-
-  const setColor = async (noteId, color) => {
-    const noteRef = doc(db, "notes", noteId);
-
-    // Create copy of existing color
-    const oldColor = notes.find((e) => e.id === noteId).color;
-    notes.find((e) => e.id === noteId).color = color;
-    setNotes([...notes]);
-
-    // Now, Update firebase with new changes
-    try {
-      await updateDoc(noteRef, {
-        color: color,
-      });
-    } catch (error) {
-      // On failure revert back the changes
-      notes.find((e) => e.id === noteId).color = oldColor;
-      setNotes([...notes]);
-      notification["error"]({
-        message: "Error",
-        description: "Error updating note color",
-      });
-    }
-  };
 
   return (
     <Row>
@@ -102,7 +76,12 @@ const ListNotes = ({ loading, notes }) => {
                       {trim(eachNote.description, 500)}
                     </div>
                     <div className={styles.controls}>
-                      <Controls />
+                      <Controls
+                        type="listNote"
+                        note={eachNote}
+                        notes={notes}
+                        setNotes={setNotes}
+                      />
                     </div>
                   </Col>
                   <span className={styles.pinIcon}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
 import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
@@ -23,6 +23,8 @@ import styles from "./AddNoteForm.module.css";
 const { TextArea } = Input;
 
 const AddNoteForm = ({
+  bgColor,
+  setBgColor,
   showAddNoteForm,
   toggleAddNoteForm,
   title,
@@ -32,29 +34,14 @@ const AddNoteForm = ({
   setTitleFocused,
   setDescFocused,
 }) => {
-  // const saveNote = async () => {
-  //   try {
-  //     if (title.length) {
-  //       let { id } = await addDoc(collection(getFirestore(), "notes"), {
-  //         title,
-  //         description: "test",
-  //       });
-  //       onAddNote({ id, title, description });
-  //       setTitle(null);
-  //       setDescription(null);
-  //     }
-  //   } catch (error) {
-  //     notification["error"]({
-  //       message: "Error",
-  //       description: "Error adding note",
-  //     });
-  //   }
-  // };
-
   return (
     <Row tabIndex={0}>
       <Col span={4} />
-      <Col span={16}>
+      <Col
+        span={16}
+        className={styles.mainContainer}
+        style={{ background: `${bgColor}` }}
+      >
         {!showAddNoteForm ? (
           <div
             className={styles.addnoteinput}
@@ -106,7 +93,7 @@ const AddNoteForm = ({
             <Col span={24}>
               <Row>
                 <Col span={20}>
-                  <Controls />
+                  <Controls type="addNote" onSelect={setBgColor} />
                 </Col>
                 <Col span={4}>
                   <Button
