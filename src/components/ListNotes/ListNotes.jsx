@@ -4,7 +4,8 @@ import { Row, Col, Card, notification, Empty } from "antd";
 import { doc, updateDoc } from "firebase/firestore";
 
 import { Responsive, WidthProvider } from "react-grid-layout";
-import { PushpinOutlined } from "@ant-design/icons";
+import PushPinOutlinedIcon from "@mui/icons-material/PushPinOutlined";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import { trim } from "@/utils.js";
 import db from "@/config/firebase";
@@ -96,9 +97,6 @@ const ListNotes = ({ loading, notes }) => {
                       {trim(eachNote.title, 20)}
                     </Col>
                   )}
-                  {/* <Col span={1}>
-                    <PushpinOutlined />
-                  </Col> */}
                   <Col span={24} className={styles.noteDesc}>
                     <div className={styles.notedescription}>
                       {trim(eachNote.description, 500)}
@@ -107,6 +105,12 @@ const ListNotes = ({ loading, notes }) => {
                       <Controls />
                     </div>
                   </Col>
+                  <span className={styles.pinIcon}>
+                    <PushPinOutlinedIcon />
+                  </span>
+                  <span className={styles.checkIcon}>
+                    <CheckCircleIcon />
+                  </span>
                 </Row>
               </Card>
             );

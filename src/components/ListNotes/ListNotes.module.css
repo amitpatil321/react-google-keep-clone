@@ -25,20 +25,43 @@
   padding: 12px !important;
 }
 
-.note :global(.anticon-pushpin) {
+/* Card action icons */
+
+.pinIcon {
+  /* padding: 30px; */
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  position: absolute;
+  right: 25px;
+  top: 10px;
   opacity: 0;
-  padding: 5px;
+  transition: all 0.5s linear;
+  color: #969696;
 }
 
-.note :global(.anticon-pushpin:hover) {
-  border-radius: 50% !important;
-  background: #eee;
+.pinIcon:hover {
+  /* color: #aaa9a9; */
+  background: rgb(211, 210, 210);
 }
 
 .note:hover .controls,
-.note:hover :global(.anticon-pushpin) {
+.note:hover .pinIcon,
+.note:hover .checkIcon {
   transition: all 0.3s linear;
   opacity: 1;
+  border-radius: 50%;
+}
+
+/* Pin icon */
+
+.checkIcon {
+  padding: 10px;
+  width: 1rem !important;
+  height: 1rem !important;
+  position: absolute;
+  left: -20px;
+  top: -20px;
+  opacity: 0;
 }
 
 :global(.ant-popover-inner-content) {
