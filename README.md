@@ -5,6 +5,7 @@ Google keep clone using react and firebase
 
 ### Stack
 - React
+- Firebase
 - CSS Module
 - Vite
 
